@@ -40,6 +40,10 @@ class App extends React.Component {
     this.setState({moviesWillWatch: updateMoviesWillWatch});
   };
 
+  clearAll = () => {
+    this.setState({moviesWillWatch: []});
+  }
+
   render() {
     return (
       <div className="container">
@@ -63,7 +67,26 @@ class App extends React.Component {
             </div>
           </div>
           <div className="col-3">
-            <h4>Will Watch: {this.state.moviesWillWatch.length} movies</h4>
+            <h4>Will Watch: {this.state.moviesWillWatch.length}
+              movies</h4>
+            {this.state.moviesWillWatch === [] 
+              ? (
+                <button
+                  type="button"
+                  className="btn btn-danger mb-2"
+                  onClick={() => {
+                  this.clearAll()
+                }}>Clear Al</button>
+              )
+              : (
+                <button
+                  type="button"
+                  className="btn btn-danger mb-2"
+                  onClick={() => {
+                  this.clearAll()
+                }}>Clear All</button>
+              )}
+
             <ul className="list-group">
               {this
                 .state
