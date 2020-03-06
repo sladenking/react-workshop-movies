@@ -1,6 +1,14 @@
 import React from "react";
 
 class MovieTabs extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.sort_by !== this.props.sort_by){
+      return true
+    } else {
+      return false
+    }
+  }
+
   render() {
     const {sort_by, updateSortBy} = this.props;
     // const handleClick = (value) => {   return (event) => { updateSortBy(value);
