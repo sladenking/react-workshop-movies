@@ -1,6 +1,8 @@
 import React from "react";
-import {moviesData} from "../moviesData";
+// import {moviesData} from "../moviesData";
 import MovieItem from "./MovieItem";
+import MovieTabs from "./MovieTabs";
+import {API_URL, API_KEY_3} from "../utils/api";
 
 // UI = fn(state, props) App = new React.Component()
 
@@ -9,10 +11,17 @@ class App extends React.Component {
     super();
 
     this.state = {
-      movies: moviesData,
-      moviesWillWatch: []
-    };
-  }
+      movies: [],
+      moviesWillWatch: [],
+      sort_by: "popularity.desc"
+    }
+  };
+
+  componentDidMount() {
+    fetch(`${API_URL}/discover/movie?api_key=${API_KEY_3}&sort_by=${this.state.sort_by}`).then(response => {
+      return response.json()
+    }).then(data => this.setState({movies: data.results}))
+  };
 
   deleteMovie = movie => {
     const updateMovies = this
@@ -42,14 +51,18 @@ class App extends React.Component {
 
   clearAll = () => {
     this.setState({moviesWillWatch: []});
-  }
+  };
 
   render() {
     return (
       <div className="container">
         <div className="row mt-4">
+          <div className="col-12">
+            <MovieTabs 
+            sort_by={this.state.sort_by}/> 
+          </div>
           <div className="col-9">
-            <div className="row">
+            <div className="row mt-4">
               {this
                 .state
                 .movies
@@ -67,39 +80,28 @@ class App extends React.Component {
             </div>
           </div>
           <div className="col-3">
-            <h4>Will Watch: {this.state.moviesWillWatch.length}
-              movies</h4>
-            {this.state.moviesWillWatch === [] 
-              ? (
-                <button
-                  type="button"
-                  className="btn btn-danger mb-2"
-                  onClick={() => {
-                  this.clearAll()
-                }}>Clear Al</button>
-              )
-              : (
-                <button
-                  type="button"
-                  className="btn btn-danger mb-2"
-                  onClick={() => {
-                  this.clearAll()
-                }}>Clear All</button>
-              )}
-
-            <ul className="list-group">
-              {this
-                .state
-                .moviesWillWatch
-                .map(movie => (
-                  <li key={movie.id} className="list-group-item">
-                    <div className="d-flex justify-content-between">
-                      <span>{movie.title}</span>
-                      <span>{movie.vote_average}</span>
-                    </div>
-                  </li>
-                ))}
-            </ul>
+            <div className="row mt-3">
+              <h4>Favorites: {this.state.moviesWillWatch.length} movies</h4>
+              {/* <button
+                type="button"
+                className="btn btn-danger mb-2"
+                onClick={() => {
+                this.clearAll();
+              }}>Clear All</button> */}
+              <ul className="list-group">
+                {this
+                  .state
+                  .moviesWillWatch
+                  .map(movie => (
+                    <li key={movie.id} className="list-group-item">
+                      <div className="d-flex justify-content-between">
+                        <span>{movie.title}</span>
+                        <span>{movie.vote_average}</span>
+                      </div>
+                    </li>
+                  ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>

@@ -7,7 +7,6 @@ class MovieItem extends React.Component {
 
   render() {
     const {data, deleteMovie, addMovie, removeMovie} = this.props;
-    // props.data = {};
     return (
       <div className="card text-white bg-dark mb-3">
         <img
@@ -44,7 +43,7 @@ class MovieItem extends React.Component {
 
             <button
               type="button"
-              class="btn btn-danger"
+              className="btn btn-danger"
               onClick={() => {
               deleteMovie(data);
             }}>
