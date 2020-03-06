@@ -53,13 +53,18 @@ class App extends React.Component {
     this.setState({moviesWillWatch: []});
   };
 
+  updateSortBy = value => {
+    this.setState({sort_by: value});
+  };
+
   render() {
     return (
       <div className="container">
         <div className="row mt-4">
           <div className="col-12">
             <MovieTabs 
-            sort_by={this.state.sort_by}/> 
+              sort_by={this.state.sort_by} 
+              updateSortBy={this.updateSortBy}/>
           </div>
           <div className="col-9">
             <div className="row mt-4">
@@ -81,7 +86,9 @@ class App extends React.Component {
           </div>
           <div className="col-3">
             <div className="row mt-3">
-              <h4>Favorites: {this.state.moviesWillWatch.length} movies</h4>
+              <h4>Favorites: {this.state.moviesWillWatch.length}
+                {" "}
+                movies</h4>
               {/* <button
                 type="button"
                 className="btn btn-danger mb-2"
