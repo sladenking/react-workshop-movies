@@ -18,9 +18,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    fetch(`${API_URL}/discover/movie?api_key=${API_KEY_3}&sort_by=${this.state.sort_by}`).then(response => {
-      return response.json()
-    }).then(data => this.setState({movies: data.results}))
+    this.getMovies();
   };
 
   deleteMovie = movie => {
@@ -57,14 +55,24 @@ class App extends React.Component {
     this.setState({sort_by: value});
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.sort_by !== this.state.sort_by) {
+      this.getMovies();
+    };
+  };
+
+  getMovies = () => {
+    fetch(`${API_URL}/discover/movie?api_key=${API_KEY_3}&sort_by=${this.state.sort_by}`).then(response => {
+      return response.json()
+    }).then(data => this.setState({movies: data.results}))
+  };
+
   render() {
     return (
       <div className="container">
         <div className="row mt-4">
           <div className="col-12">
-            <MovieTabs 
-              sort_by={this.state.sort_by} 
-              updateSortBy={this.updateSortBy}/>
+            <MovieTabs sort_by={this.state.sort_by} updateSortBy={this.updateSortBy}/>
           </div>
           <div className="col-9">
             <div className="row mt-4">
