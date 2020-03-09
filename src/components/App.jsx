@@ -59,7 +59,7 @@ class App extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.sort_by !== this.state.sort_by) {
+    if (prevState!== this.state) {
       this.getMovies();
     };
   };
@@ -91,9 +91,10 @@ class App extends React.Component {
           <div className="col-12">
             <MovieTabs sort_by={this.state.sort_by} updateSortBy={this.updateSortBy}/>
           </div>
-          <div className="col-12 mt-4">
+          <div className="col-9 mt-4 d-flex justify-content-between align-items-center">
             <Pagination
               activePage={this.state.activePage}
+              totalPages={this.state.totalPages}
               increment={this.increment}
               decrement={this.decrement}/>
             {/* <span>Total pages: {this.state.totalPages}</span> */}

@@ -2,7 +2,7 @@ import React from "react";
 
 class Pagination extends React.Component {
   render() {
-    const {increment, decrement, activePage} = this.props;
+    const {increment, decrement, activePage, totalPages} = this.props;
     return (
       <div>
         <button
@@ -18,7 +18,7 @@ class Pagination extends React.Component {
         <span style={{
           margin: "50px"
         }}>
-          <strong>{activePage}</strong>
+          <strong>{activePage} - {totalPages}</strong>
         </span>
 
         <button
@@ -26,7 +26,8 @@ class Pagination extends React.Component {
           className="btn btn-secondary"
           onClick={() => {
           increment()
-        }}>
+        }}
+          disabled={activePage === totalPages}>
           Next
         </button>
       </div>
