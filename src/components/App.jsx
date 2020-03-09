@@ -91,14 +91,6 @@ class App extends React.Component {
           <div className="col-12">
             <MovieTabs sort_by={this.state.sort_by} updateSortBy={this.updateSortBy}/>
           </div>
-          <div className="col-9 mt-4 d-flex justify-content-between align-items-center">
-            <Pagination
-              activePage={this.state.activePage}
-              totalPages={this.state.totalPages}
-              increment={this.increment}
-              decrement={this.decrement}/>
-            {/* <span>Total pages: {this.state.totalPages}</span> */}
-          </div>
           <div className="col-9">
             <div className="row mt-4">
               {this
@@ -142,6 +134,14 @@ class App extends React.Component {
                   ))}
               </ul>
             </div>
+          </div>
+          <div className="col-9 mb-4">
+            <Pagination
+              activePage={this.state.activePage}
+              totalPages={this.state.totalPages}
+              increment={this.increment}
+              decrement={this.decrement}/>
+            {/* <span>Total pages: {this.state.totalPages}</span> */}
           </div>
         </div>
       </div>
