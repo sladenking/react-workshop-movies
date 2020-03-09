@@ -2,7 +2,7 @@ import React from "react";
 
 class MovieTabs extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.sort_by !== this.props.sort_by){
+    if (nextProps.sort_by !== this.props.sort_by) {
       return true
     } else {
       return false
@@ -11,10 +11,12 @@ class MovieTabs extends React.Component {
 
   render() {
     const {sort_by, updateSortBy} = this.props;
-    // const handleClick = (value) => {   return (event) => { updateSortBy(value);
-    // } };
-    const handleClick = value => () => {
-      updateSortBy(value);
+    // const handleClick = (value) => {   return (event) => { updateSortBy(value); }
+    // };
+    const handleClick = value => {
+      return () => {
+        updateSortBy(value);
+      };
     };
     const getClassLink = value => {
       return `nav-link ${sort_by === value

@@ -3,6 +3,7 @@ import React from "react";
 import MovieItem from "./MovieItem";
 import MovieTabs from "./MovieTabs";
 import {API_URL, API_KEY_3} from "../utils/api";
+import Pagination from "./Pagination";
 
 // UI = fn(state, props) App = new React.Component()
 
@@ -13,7 +14,9 @@ class App extends React.Component {
     this.state = {
       movies: [],
       moviesWillWatch: [],
-      sort_by: "popularity.desc"
+      sort_by: "popularity.desc",
+      activePage: 1,
+      totalPages: 0
     }
   };
 
@@ -52,7 +55,7 @@ class App extends React.Component {
   };
 
   updateSortBy = value => {
-    this.setState({sort_by: value});
+    this.setState({sort_by: value, activePage: 1});
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -62,9 +65,23 @@ class App extends React.Component {
   };
 
   getMovies = () => {
-    fetch(`${API_URL}/discover/movie?api_key=${API_KEY_3}&sort_by=${this.state.sort_by}`).then(response => {
+    fetch(`${API_URL}/discover/movie?api_key=${API_KEY_3}&sort_by=${this.state.sort_by}&page=${this.state.activePage}`).then(response => {
       return response.json()
-    }).then(data => this.setState({movies: data.results}))
+    }).then(data => this.setState({movies: data.results, totalPages: data.total_pages}))
+  };
+
+  decrement = () => {
+    this.setState({
+      activePage: this.state.activePage - 1
+    });
+    console.log(this.state.activePage - 1)
+  };
+
+  increment = () => {
+    this.setState({
+      activePage: this.state.activePage + 1
+    });
+    console.log(this.state.activePage + 1)
   };
 
   render() {
@@ -73,6 +90,13 @@ class App extends React.Component {
         <div className="row mt-4">
           <div className="col-12">
             <MovieTabs sort_by={this.state.sort_by} updateSortBy={this.updateSortBy}/>
+          </div>
+          <div className="col-12 mt-4">
+            <Pagination
+              activePage={this.state.activePage}
+              increment={this.increment}
+              decrement={this.decrement}/>
+            {/* <span>Total pages: {this.state.totalPages}</span> */}
           </div>
           <div className="col-9">
             <div className="row mt-4">
@@ -103,7 +127,7 @@ class App extends React.Component {
                 onClick={() => {
                 this.clearAll();
               }}>Clear All</button> */}
-              <ul className="list-group">
+              <ul className="list-group w-100">
                 {this
                   .state
                   .moviesWillWatch
