@@ -59,7 +59,7 @@ class App extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState!== this.state) {
+    if (prevState !== this.state) {
       this.getMovies();
     };
   };
@@ -85,12 +85,14 @@ class App extends React.Component {
   };
 
   render() {
+    const getClassLink = () => {
+      return `{display: ${this.state.moviesWillWatch === []
+        ? "none"
+        : "flex"}}`
+    }
     return (
       <div className="container">
-        <div className="row mt-4">
-          <div className="col-12">
-            <MovieTabs sort_by={this.state.sort_by} updateSortBy={this.updateSortBy}/>
-          </div>
+        <div className="row">
           <div className="col-9">
             <div className="row mt-4">
               {this
@@ -110,16 +112,22 @@ class App extends React.Component {
             </div>
           </div>
           <div className="col-3">
-            <div className="row mt-3">
+            <div
+              className="row mt-4"
+              style={{
+              position: "fixed"
+            }}>
+              <MovieTabs sort_by={this.state.sort_by} updateSortBy={this.updateSortBy}/>
+            </div>
+            <div
+              className="row"
+              style={{
+              position: "fixed",
+              top: "70px"
+            }}>
               <h4>Favorites: {this.state.moviesWillWatch.length}
                 {" "}
                 movies</h4>
-              {/* <button
-                type="button"
-                className="btn btn-danger mb-2"
-                onClick={() => {
-                this.clearAll();
-              }}>Clear All</button> */}
               <ul className="list-group w-100">
                 {this
                   .state
@@ -133,6 +141,15 @@ class App extends React.Component {
                     </li>
                   ))}
               </ul>
+              <div className="mt-2">
+                <button
+                  type="button"
+                  className="btn btn-danger mb-2"
+                  style={getClassLink()}
+                  onClick={() => {
+                  this.clearAll();
+                }}>Clear All</button>
+              </div>
             </div>
           </div>
           <div className="col-9 mb-4">
@@ -140,8 +157,7 @@ class App extends React.Component {
               activePage={this.state.activePage}
               totalPages={this.state.totalPages}
               increment={this.increment}
-              decrement={this.decrement}/>
-            {/* <span>Total pages: {this.state.totalPages}</span> */}
+              decrement={this.decrement}/> {/* <span>Total pages: {this.state.totalPages}</span> */}
           </div>
         </div>
       </div>

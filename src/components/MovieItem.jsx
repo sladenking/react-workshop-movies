@@ -7,11 +7,12 @@ class MovieItem extends React.Component {
 
   render() {
     const {data, deleteMovie, addMovie, removeMovie} = this.props;
+    const  img = `https://image.tmdb.org/t/p/w500${data.backdrop_path || data.poster_path}`;
     return (
       <div className="card text-white bg-dark mb-3">
         <img
           className="card-img-top"
-          src={`https://image.tmdb.org/t/p/w500${data.backdrop_path || data.poster_path}`}
+          src={img}
           alt=""/>
         <div className="card-body">
           <h6 className="card-title">{data.title}</h6>
